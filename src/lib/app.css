@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.link {
+		@apply text-blue-600 dark:text-blue-500 hover:underline;
+	}
+
+	.btn {
+		@apply bg-black dark:bg-gray-800 hover:bg-gray-800 dark:hover:bg-gray-700 rounded-full py-2 px-6 text-white font-medium text-lg mx-2 shadow active:scale-105;
+	}
+
+	.btn-primary {
+		@apply bg-blue-700 hover:bg-blue-600;
+	}
+
+	.input {
+		@apply bg-gray-100 dark:bg-gray-900 w-full border-2 border-gray-300 dark:border-gray-700 rounded-full py-3 px-6 m-2 flex-grow shadow block text-inherit;
+	}
+
+	.action-box {
+		@apply flex flex-col items-center dark:bg-gray-950 w-[30em] border-gray-400 dark:border-gray-500 border-4 px-16 py-10 rounded-[2.5em];
+	}
+
+	.scheme-dark {
+		color-scheme: dark;
+	}
+}
