@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	import { onDestroy, onMount } from 'svelte';
 
 	let cursor: HTMLElement | null;
 	let sentence: HTMLElement | null;
@@ -66,8 +67,10 @@
 		return Math.random() * (maxNum - minNum) + minNum;
 	}
 
+	let frame: number;
 	onMount(async () => {
 		async function changeSentence() {
+			await sleep(randRange(5000, 8000));
 			if (cursor && sentence) {
 				cursor.style.display = 'inline';
 				await shortTypingBreak();
@@ -116,21 +119,13 @@
 			} else {
 				throw new Error();
 			}
+			frame = requestAnimationFrame(changeSentence);
 		}
 
-		async function changeSentenceLoop() {
-			for (let i = 0; i < sentences.length * 10; i++) {
-				await sleep(randRange(5000, 8000));
-				try {
-					await changeSentence();
-				} catch (error) {
-					break;
-				}
-			}
-		}
-
-		await changeSentenceLoop();
+		changeSentence();
 	});
+
+	onDestroy(() => browser && cancelAnimationFrame(frame));
 </script>
 
 <div class="flex flex-col items-center justify-center m-auto p-10 mx-8">
