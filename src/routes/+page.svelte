@@ -130,12 +130,12 @@
 
 <div class="flex flex-col items-center justify-center m-auto p-10 mx-8">
 	<div
-		class="p-4 border-4 border-indigo-600 rounded-full shadow-xl bg-indigo-50 dark:bg-indigo-950 text-pretty"
+		class="p-4 border-4 border-indigo-600 rounded-full shadow-xl bg-indigo-50 dark:bg-indigo-950 text-nowrap"
 	>
-		<img src="images/glass_cursor.svg" width="64" alt="logo" class="inline" />
-		<span class="align-middle m-4 text-2xl font-bold">Glass Cursor</span>
+		<img src="images/glass_cursor.svg" alt="logo" class="inline w-10 md:w-14" />
+		<span class="align-middle m-2 text-xl lg:text-2xl font-bold">Glass Cursor</span>
 	</div>
-	<div class="sm:h-36 h-52 flex items-center">
+	<div class="sm:h-36 h-52 flex items-center my-4">
 		<h1 class="lg:text-5xl text-4xl font-bold text-center leading-tight">
 			<span bind:this={sentence}>
 				Capture your <span class="text-yellow-600">mind</span> without ever losing
@@ -144,7 +144,7 @@
 			<span class="font-light hidden" bind:this={cursor}>|</span>
 		</h1>
 	</div>
-	<p class="lg:text-xl max-w-4xl text-center">
+	<p class="lg:text-xl max-w-4xl text-center text-pretty">
 		Glass Cursor is a free and open source web-based simple markdown note-taking app. It can be used
 		for writing text for any reason with markdown. It's designed to be simple but yet useful. With
 		its elegant user interface, you can focus on your notes without any friction. For more
