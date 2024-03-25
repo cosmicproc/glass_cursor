@@ -1,11 +1,37 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 
-export const currentNote = writable(
-	browser && localStorage.currentNote !== undefined ? JSON.parse(localStorage.currentNote) : -1
+function fetchLocalStorage(key: string, fallback: unknown) {
+    try {
+        return JSON.parse(localStorage[key]);
+    } catch {
+        return fallback;
+    }
+}
+
+function localStorageUpdater(key: string) {
+    return (value: unknown) => {
+        if (browser) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+    };
+}
+
+export const currentNote = writable(fetchLocalStorage('currentNote', -1));
+currentNote.subscribe(localStorageUpdater('currentNote'));
+
+export const notes = writable(fetchLocalStorage('notes', []));
+notes.subscribe(localStorageUpdater('notes'));
+
+export const sourceExtended = writable(
+    fetchLocalStorage('sourceExtended', false),
 );
-currentNote.subscribe((value: number) => {
-	if (browser) {
-		localStorage.setItem('currentNote', JSON.stringify(value));
-	}
-});
+sourceExtended.subscribe(localStorageUpdater('sourceExtended'));
+
+export const previewExtended = writable(
+    fetchLocalStorage('previewExtended', false),
+);
+previewExtended.subscribe(localStorageUpdater('previewExtended'));
+
+export const sidebarActive = writable(fetchLocalStorage('sidebarActive', true));
+sidebarActive.subscribe(localStorageUpdater('sidebarActive'));

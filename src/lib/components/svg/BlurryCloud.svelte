@@ -1,0 +1,41 @@
+<script lang="ts">
+    export let classList: string = '';
+</script>
+
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    width="315.04mm"
+    height="145.72mm"
+    class={classList}
+    version="1.1"
+    viewBox="0 0 315.04 145.72"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+    <defs>
+        <radialGradient
+            id="radialGradient4"
+            cx="112.57"
+            cy="126.36"
+            r="85.428"
+            gradientTransform="matrix(1.8439 0 0 .8529 -94.999 18.587)"
+            gradientUnits="userSpaceOnUse"
+        >
+            <stop stop-color="#f0f" offset="0" />
+            <stop stop-color="#800080" stop-opacity=".50284" offset=".74802" />
+            <stop stop-color="#800080" stop-opacity="0" offset="1" />
+        </radialGradient>
+    </defs>
+    <g transform="translate(44.953 -53.5)">
+        <ellipse
+            cx="112.57"
+            cy="126.36"
+            rx="157.52"
+            ry="72.862"
+            fill="url(#radialGradient4)"
+            opacity=".1"
+            stroke-width="1.9678"
+            style="mix-blend-mode:normal;paint-order:fill markers stroke"
+        />
+    </g>
+</svg>
