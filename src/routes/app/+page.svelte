@@ -1,18 +1,18 @@
 <script>
-	import { default as Panel } from '$lib/components/panel.svelte';
-	import { default as Editor } from '$lib/components/editor.svelte';
-	import { tick } from 'svelte';
+    import { tick } from 'svelte';
+    import Panel from '$lib/components/Panel.svelte';
+    import Editor from '$lib/components/Editor.svelte';
 </script>
 
 <svelte:head>
-	<base target="_blank" />
+    <base target="_blank" />
 </svelte:head>
 
-<div class="flex w-[100dvw] h-[100dvh]">
-	<Panel />
-	{#await tick()}
-		<!-- Waiting  -->
-	{:then}
-		<Editor />
-	{/await}
+<div class="flex w-screen h-screen">
+    <Panel />
+    {#await tick()}
+        <!-- Waiting  -->
+    {:then}
+        <Editor />
+    {/await}
 </div>
