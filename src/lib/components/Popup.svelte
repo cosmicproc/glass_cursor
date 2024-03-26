@@ -26,12 +26,12 @@
 </script>
 
 <div
-    class="absolute w-full h-full flex justify-center items-center z-20 backdrop-blur"
+    class="absolute z-20 flex h-full w-full items-center justify-center backdrop-blur"
     class:hidden={!status}
     use:trapFocus
 >
     <div
-        class="max-w-[90dvw] w-[30em] m-8 bg-neutral-100 dark:bg-neutral-900 border-2 dark:border-neutral-700 border-gray-300 shadow-lg rounded-2xl py-8 px-4 sm:px-8 text-center"
+        class="m-8 w-[30em] max-w-[90dvw] rounded-2xl border-2 border-gray-300 bg-neutral-100 px-4 py-8 text-center shadow-lg sm:px-8 dark:border-neutral-700 dark:bg-neutral-900"
         bind:this={popup}
     >
         <slot />

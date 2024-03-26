@@ -27,6 +27,6 @@
     </script>
 </svelte:head>
 
-<div class="min-h-screen flex flex-col">
+<div class="flex min-h-screen flex-col">
     <slot />
 </div>

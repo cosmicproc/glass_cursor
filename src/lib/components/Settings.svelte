@@ -28,15 +28,15 @@
 </script>
 
 <Popup bind:this={settings}>
-    <h1 class="text-2xl font-bold mb-6">Settings</h1>
+    <h1 class="mb-6 text-2xl font-bold">Settings</h1>
     <div
-        class="my-2 bg-neutral-200 dark:bg-neutral-800 border-neutral-400 dark:border-neutral-700 border-2 p-2 px-6 rounded-3xl shadow"
+        class="my-2 rounded-3xl border-2 border-neutral-400 bg-neutral-200 p-2 px-6 shadow dark:border-neutral-700 dark:bg-neutral-800"
     >
-        <label class="flex items-center min-h-10">
-            <span class="font-medium text-lg mr-4">Theme</span>
+        <label class="flex min-h-10 items-center">
+            <span class="mr-4 text-lg font-medium">Theme</span>
             <select
                 data-testid="theme-select"
-                class="ml-auto border-2 border-neutral-500 rounded-2xl p-2 min-w-40x"
+                class="min-w-40x ml-auto rounded-2xl border-2 border-neutral-500 p-2"
                 name="theme"
                 on:change={handleChange}
             >

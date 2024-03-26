@@ -18,7 +18,7 @@
 </script>
 
 <Popup bind:this={renameNote}>
-    <h1 class="text-2xl font-bold mb-6">Rename the Note</h1>
+    <h1 class="mb-6 text-2xl font-bold">Rename the Note</h1>
     <label class="flex items-center">
         <b>Note Name</b>
         <input
@@ -34,7 +34,7 @@
             }}
         />
     </label>
-    <div class="flex mt-6 justify-center">
+    <div class="mt-6 flex justify-center">
         <button
             class="btn"
             on:click={() => {

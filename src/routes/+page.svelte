@@ -34,21 +34,21 @@
     const maxDuration = sentenceIntervalTime / 4;
 </script>
 
-<div class="flex flex-col items-center justify-center m-auto p-10 mx-8">
+<div class="m-auto mx-8 flex flex-col items-center justify-center p-10">
     <div
-        class="p-2 sm:p-4 border-4 border-indigo-600 rounded-full shadow-lg bg-indigo-50 dark:bg-indigo-950 text-nowrap"
+        class="text-nowrap rounded-full border-4 border-indigo-600 bg-indigo-50 p-2 shadow-lg sm:p-4 dark:bg-indigo-950"
     >
         <Logo classList="inline w-10 md:w-12" />
         <span
-            class="align-middle m-2 text-lg sm:text-xl lg:text-2xl font-semibold"
+            class="m-2 align-middle text-lg font-semibold sm:text-xl lg:text-2xl"
             >Glass Cursor</span
         >
     </div>
     <div
-        class="flex items-center my-2 sm:my-8 min-h-40 sm:min-h-32 md:min-h-24"
+        class="my-2 flex min-h-40 items-center sm:my-8 sm:min-h-32 md:min-h-24"
     >
         <h1
-            class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center leading-tight"
+            class="text-center text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl"
         >
             {#key sentenceCursor}
                 <span
@@ -62,10 +62,10 @@
                     <svelte:component this={sentences[sentenceCursor]} />
                 </span>
             {/key}
-            <span class="font-light hidden" bind:this={cursor}>|</span>
+            <span class="hidden font-light" bind:this={cursor}>|</span>
         </h1>
     </div>
-    <p class="lg:text-xl max-w-5xl text-center text-pretty">
+    <p class="max-w-5xl text-pretty text-center lg:text-xl">
         Glass Cursor is a free and open source simple web-based markdown
         note-taking app. It can be used for writing text for any purpose with
         markdown. It's designed to be simple but yet useful. With its elegant
@@ -76,7 +76,7 @@
     <a href="./app" class="btn btn-blue mt-6">Open app</a>
 </div>
 <div
-    class="h-screen w-screen overflow-hidden absolute inset-0 m-auto -z-10 hidden dark:md:flex"
+    class="absolute inset-0 -z-10 m-auto hidden h-screen w-screen overflow-hidden dark:md:flex"
 >
     <BlurryCloud classList="m-auto" />
 </div>

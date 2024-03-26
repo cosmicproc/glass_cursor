@@ -12,13 +12,13 @@
 </script>
 
 <Popup bind:this={confirmDeletion}>
-    <h1 class="text-2xl font-bold mb-6">Delete the Note?</h1>
+    <h1 class="mb-6 text-2xl font-bold">Delete the Note?</h1>
     <p>
         You are about the delete the note named "<strong
             >{confirmDeleteTargetName}</strong
         >". Are you sure? This action cannot be reverted.
     </p>
-    <div class="flex mt-6 justify-center">
+    <div class="mt-6 flex justify-center">
         <button
             data-testid="delete-confirm"
             class="btn btn-red"

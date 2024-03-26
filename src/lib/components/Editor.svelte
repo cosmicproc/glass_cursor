@@ -99,32 +99,32 @@
     }
 </script>
 
-<div class="flex flex-grow basis-0 p-10 overflow-hidden flex-col lg:flex-row">
+<div class="flex flex-grow basis-0 flex-col overflow-hidden p-10 lg:flex-row">
     <div
-        class={`border-2 border-neutral-300 dark:border-neutral-500 rounded-3xl overflow-hidden lg:w-1/2 h-1/2 lg:h-full flex flex-col flex-grow shadow-lg transition-all duration-300 mb-4 lg:mb-0 ${
+        class={`mb-4 flex h-1/2 flex-grow flex-col overflow-hidden rounded-3xl border-2 border-neutral-300 shadow-lg transition-all duration-300 lg:mb-0 lg:h-full lg:w-1/2 dark:border-neutral-500 ${
             $previewExtended && !$sourceExtended
                 ? 'lg:-ml-[110%] lg:mr-24'
                 : 'lg:mr-2'
         }`}
     >
         <div
-            class="w-full p-4 text-center backdrop-blur bg-neutral-200 dark:bg-neutral-800 bg-opacity-70 dark:bg-opacity-70 flex"
+            class="flex w-full bg-neutral-200 bg-opacity-70 p-4 text-center backdrop-blur dark:bg-neutral-800 dark:bg-opacity-70"
         >
             <a
                 href="https://commonmark.org/help/"
                 title="Help"
-                class="hover:bg-gray-300 dark:hover:bg-gray-700 rounded-xl px-2 flex items-center"
+                class="flex items-center rounded-xl px-2 hover:bg-gray-300 dark:hover:bg-gray-700"
             >
                 <FontAwesomeIcon icon={faQuestion} />
             </a>
             <strong class="mx-auto">
                 <FontAwesomeIcon icon={faMarkdown} class="align-middle" />
-                <span class="align-middle ml-1">Markdown Editor</span>
+                <span class="ml-1 align-middle">Markdown Editor</span>
             </strong>
             <button
                 title={sourceExtended ? 'Shrink' : 'Extend'}
                 data-testid="resize-editor"
-                class="hover:bg-gray-300 dark:hover:bg-gray-700 rounded-xl px-2 cursor-pointer invisible lg:visible"
+                class="invisible cursor-pointer rounded-xl px-2 hover:bg-gray-300 lg:visible dark:hover:bg-gray-700"
                 on:click={() => {
                     sourceExtended.set(!$sourceExtended);
                 }}
@@ -136,10 +136,10 @@
                 {/if}
             </button>
         </div>
-        <div class="overflow-auto -mt-16 h-full w-full flex flex-grow">
+        <div class="-mt-16 flex h-full w-full flex-grow overflow-auto">
             <textarea
                 data-testid="editor"
-                class="outline-none bg-transparent resize-none p-6 font-mono w-full pt-[5.5em] pb-8"
+                class="w-full resize-none bg-transparent p-6 pb-8 pt-[5.5em] font-mono outline-none"
                 placeholder={$currentNote === -1
                     ? 'Choose a note from the left-hand side panel to edit.'
                     : 'Dump your mind here.'}
@@ -154,19 +154,19 @@
         </div>
     </div>
     <div
-        class={`border-2 border-neutral-300 dark:border-neutral-500 rounded-3xl overflow-hidden lg:w-1/2 h-1/2 lg:h-full flex flex-col flex-grow shadow-lg transition-all duration-300 mt-4 lg:mt-0 ${
+        class={`mt-4 flex h-1/2 flex-grow flex-col overflow-hidden rounded-3xl border-2 border-neutral-300 shadow-lg transition-all duration-300 lg:mt-0 lg:h-full lg:w-1/2 dark:border-neutral-500 ${
             $sourceExtended && !$previewExtended
                 ? 'lg:-mr-[110%] lg:ml-24'
                 : 'lg:ml-2'
         }`}
     >
         <div
-            class="w-full p-4 text-center backdrop-blur bg-neutral-200 dark:bg-neutral-800 bg-opacity-70 dark:bg-opacity-70 flex"
+            class="flex w-full bg-neutral-200 bg-opacity-70 p-4 text-center backdrop-blur dark:bg-neutral-800 dark:bg-opacity-70"
         >
             <button
                 title={$previewExtended ? 'Shrink' : 'Extend'}
                 data-testid="resize-result-text"
-                class="hover:bg-gray-300 dark:hover:bg-gray-700 rounded-xl px-2 cursor-pointer invisible lg:visible"
+                class="invisible cursor-pointer rounded-xl px-2 hover:bg-gray-300 lg:visible dark:hover:bg-gray-700"
                 on:click={() => {
                     previewExtended.set(!$previewExtended);
                 }}
@@ -179,18 +179,18 @@
             </button>
             <strong class="mx-auto">
                 <FontAwesomeIcon icon={faAlignLeft} class="align-middle" />
-                <span class="align-middle ml-1">Formatted Text</span>
+                <span class="ml-1 align-middle">Formatted Text</span>
             </strong>
             <div class="w-[30px]"></div>
         </div>
         <div
-            class="overflow-auto -mt-16 pt-[5.5em] px-6"
+            class="-mt-16 overflow-auto px-6 pt-[5.5em]"
             bind:this={preview}
             on:scroll={syncScroll}
         >
             <article
                 data-testid="result-text"
-                class="prose dark:prose-invert dark:prose-pre:bg-gray-900 break-word pb-8 mx-auto"
+                class="break-word prose mx-auto pb-8 dark:prose-invert dark:prose-pre:bg-gray-900"
             >
                 <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                 {@html previewContent}

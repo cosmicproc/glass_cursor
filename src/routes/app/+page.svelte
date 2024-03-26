@@ -8,7 +8,7 @@
     <base target="_blank" />
 </svelte:head>
 
-<div class="flex w-screen h-screen">
+<div class="flex h-screen w-screen">
     <Panel />
     {#await tick()}
         <!-- Waiting  -->

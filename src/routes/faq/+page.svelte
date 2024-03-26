@@ -1,6 +1,6 @@
-<div class="flex justify-center text-center my-10">
+<div class="my-10 flex justify-center text-center">
     <article
-        class="prose dark:prose-invert dark:prose-pre:bg-gray-900 text-pretty"
+        class="prose text-pretty dark:prose-invert dark:prose-pre:bg-gray-900"
     >
         <h1>FAQ</h1>
         <hr />
