@@ -16,6 +16,7 @@
     import hljs from 'highlight.js';
     import 'highlight.js/styles/monokai.css';
     import markdownit from 'markdown-it';
+    import { afterUpdate, beforeUpdate } from 'svelte';
 
     const md = markdownit({
         linkify: true,
@@ -40,7 +41,10 @@
         },
     });
 
-    let source: HTMLElement;
+    let selectionStart: number;
+    let selectionEnd: number;
+
+    let source: HTMLTextAreaElement;
     let preview: HTMLElement;
     let sourceContent: string;
     let previewContent: string = '';
@@ -60,8 +64,8 @@
 
     let autoSynced = false;
     function syncScroll(this: HTMLElement) {
-        let first = preview;
-        let second = source;
+        let first: HTMLElement | HTMLTextAreaElement = preview;
+        let second: HTMLElement | HTMLTextAreaElement = source;
         if (this === source) {
             first = source;
             second = preview;
@@ -81,12 +85,12 @@
     function handleKeydown(this: HTMLTextAreaElement, event: KeyboardEvent) {
         if (event.key !== 'Tab') return;
         event.preventDefault();
-        const selStart = this?.selectionStart;
-        const selEnd = this?.selectionEnd;
-        this.value =
-            this.value.substring(0, selStart) +
+        ({ selectionStart, selectionEnd } = source);
+        sourceContent =
+            sourceContent.substring(0, selectionStart) +
             '\t' +
-            this.value.substring(selEnd);
+            sourceContent.substring(selectionEnd);
+        source.setSelectionRange(selectionStart + 1, selectionEnd + 1);
     }
 
     function handleInput() {
@@ -97,6 +101,17 @@
         updated[index].content = sourceContent;
         notes.set(updated);
     }
+
+    beforeUpdate(() => {
+        if (source) {
+            ({ selectionStart, selectionEnd } = source);
+        }
+    });
+
+    afterUpdate(() => {
+        source.setSelectionRange(selectionStart, selectionEnd);
+        source.focus();
+    });
 </script>
 
 <div class="flex flex-grow basis-0 flex-col overflow-hidden p-10 lg:flex-row">
@@ -190,7 +205,7 @@
         >
             <article
                 data-testid="result-text"
-                class="break-word prose mx-auto pb-8 dark:prose-invert dark:prose-pre:bg-gray-900"
+                class="prose mx-auto break-words pb-8 dark:prose-invert dark:prose-pre:bg-gray-900"
             >
                 <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                 {@html previewContent}
