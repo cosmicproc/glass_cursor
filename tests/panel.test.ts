@@ -1,12 +1,4 @@
 import { expect, test } from '@playwright/test';
-import os from 'os';
-const platform = os.platform();
-let systemNewTabKey: string;
-if (platform === 'darwin') {
-    systemNewTabKey = 'Meta';
-} else {
-    systemNewTabKey = 'Control';
-}
 
 test('panel visible', async ({ page }) => {
     await page.goto('/app');
@@ -37,26 +29,6 @@ test('select notes', async ({ page }) => {
         await note.click();
         const ids: string = (await note.getAttribute('id')) || '';
         expect('current-note' in ids.split(' '));
-    }
-});
-
-test('rename notes', async ({ page }) => {
-    await page.goto('/app');
-    await page.evaluate(() => localStorage.clear());
-    // Create 10 notes
-    for (let i = 0; i < 10; i++) {
-        await page.getByTestId('new-note').click();
-    }
-    for (const note of await page.getByTestId('note').all()) {
-        const renameTo = 'Renamed Note';
-        await note.getByTestId('rename').click();
-        await page.keyboard.press(systemNewTabKey + '+A');
-        await page.keyboard.press('Backspace');
-        await page.keyboard.type(renameTo);
-        const boundingBox = (await note.boundingBox()) || { x: 0, y: 0 };
-        await page.mouse.click(boundingBox.x + 10, boundingBox.y + 10);
-        const textContent: string = (await note.textContent()) || '';
-        expect(textContent.trim()).toEqual(renameTo);
     }
 });
 

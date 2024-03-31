@@ -12,6 +12,18 @@
             backend server and completely runs on your browser. You can also
             self-host it if you wish. It's only just static files.
         </p>
+        <h2>Is Markdown supported?</h2>
+        <p>
+            Yes, you should be able to use some of the Markdown syntax to format
+            your notes. Also, if you want to export a note in Markdown, you can
+            use the button near the settings button at the down left of the side
+            panel.
+        </p>
+        <h2>How can I title a note?</h2>
+        <p>
+            Note titles' are basically the first header in your note. Just add
+            an header to the top of your note.
+        </p>
         <h2>How can I make it look more like an app?</h2>
         <p>
             If you use a Chromium-based browser (Chrome, Edge) or Safari, you

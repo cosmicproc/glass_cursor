@@ -66,11 +66,10 @@
         </h1>
     </div>
     <p class="max-w-5xl text-pretty text-center lg:text-xl">
-        Glass Cursor is a free and open source simple web-based markdown
-        note-taking app. It can be used for writing text for any purpose with
-        markdown. It's designed to be simple but yet useful. With its elegant
-        user interface, you can focus on your notes without any friction. For
-        more information, see the
+        Glass Cursor is a free and open source simple web-based note-taking app.
+        It can be used for writing text for any purpose. It's designed to be
+        simple but yet useful. With its elegant user interface, you can focus on
+        your notes without any friction. For more information, see the
         <a href="./faq" class="link">FAQ</a>.
     </p>
     <a href="./app" class="btn btn-blue mt-6">Open app</a>

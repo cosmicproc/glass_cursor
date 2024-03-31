@@ -10,6 +10,25 @@ export function showElement(element: HTMLElement) {
     }
 }
 
+export const debounce = (
+    callback: (...args: unknown[]) => unknown,
+    wait: number,
+) => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    return (...args: unknown[]) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            callback(...args);
+        }, wait);
+    };
+};
+
+export const truncate = (text?: string | null, maxLength?: number) =>
+    text &&
+    maxLength &&
+    text.trim().substring(0, maxLength) +
+        (text.length > maxLength ? '...' : '');
+
 // Adapted from https://learn.svelte.dev/tutorial/actions
 export function trapFocus(element: HTMLElement) {
     const previous = document.activeElement as HTMLElement;

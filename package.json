@@ -14,18 +14,22 @@
         "test:integration": "playwright test"
     },
     "devDependencies": {
-        "@fortawesome/free-brands-svg-icons": "^6.5.1",
-        "@fortawesome/free-solid-svg-icons": "^6.5.1",
-        "@fortawesome/svelte-fontawesome": "^0.2.2",
         "@playwright/test": "^1.28.1",
         "@sveltejs/adapter-auto": "^3.0.0",
         "@sveltejs/adapter-static": "^3.0.1",
         "@sveltejs/kit": "^2.0.0",
         "@sveltejs/vite-plugin-svelte": "^3.0.0",
         "@tailwindcss/typography": "^0.5.10",
+        "@tiptap/core": "^2.2.4",
+        "@tiptap/extension-bubble-menu": "^2.2.4",
+        "@tiptap/extension-code-block-lowlight": "^2.2.4",
+        "@tiptap/extension-typography": "^2.2.4",
+        "@tiptap/pm": "^2.2.4",
+        "@tiptap/starter-kit": "^2.2.4",
         "@types/eslint": "^8.56.0",
         "@types/markdown-it": "^13.0.7",
         "@types/node": "^20.11.28",
+        "@types/turndown": "^5.0.4",
         "@typescript-eslint/eslint-plugin": "^7.0.0",
         "@typescript-eslint/parser": "^7.0.0",
         "autoprefixer": "^10.4.18",
@@ -33,7 +37,8 @@
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-svelte": "^2.35.1",
         "highlight.js": "^11.9.0",
-        "markdown-it": "^14.0.0",
+        "lowlight": "^3.1.0",
+        "lucide-svelte": "^0.363.0",
         "postcss": "^8.4.35",
         "prettier": "^3.2.5",
         "prettier-plugin-svelte": "^3.1.2",
@@ -42,8 +47,12 @@
         "svelte-check": "^3.6.0",
         "tailwindcss": "^3.4.1",
         "tslib": "^2.4.1",
+        "turndown": "^7.1.3",
         "typescript": "^5.0.0",
         "vite": "^5.0.3"
     },
-    "type": "module"
+    "type": "module",
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "^4.13.2"
+    }
 }

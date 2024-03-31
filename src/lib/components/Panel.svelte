@@ -2,18 +2,12 @@
     import { browser } from '$app/environment';
     import Logo from '$lib/components/svg/Logo.svelte';
     import { currentNote, notes, sidebarActive } from '$lib/stores';
-    import {
-        faGear,
-        faPencil,
-        faPlus,
-        faTrashCan,
-    } from '@fortawesome/free-solid-svg-icons';
-    import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+    import { FileUp, Plus, SettingsIcon, Trash2 } from 'lucide-svelte';
     import { slide } from 'svelte/transition';
     import Settings from './Settings.svelte';
     import ConfirmDeletion from './ConfirmDeletion.svelte';
-    import RenameNote from './RenameNote.svelte';
-    import { tick } from 'svelte';
+    import TurndownService from 'turndown';
+    import { truncate } from '$lib/utils';
 
     let settings: Settings;
 
@@ -21,22 +15,25 @@
     let confirmDeleteTargetIndex: number;
     let confirmDeletion: ConfirmDeletion;
 
-    let renameNoteTargetIndex: number;
-    let renameNote: RenameNote;
-
     let notesDiv: HTMLDivElement;
 
     function findNoteIndex(id: number) {
         return $notes.findIndex((o: { id: number }) => o.id === id);
     }
+
+    let turndownService = new TurndownService({
+        codeBlockStyle: 'fenced',
+        headingStyle: 'atx',
+        emDelimiter: '*',
+    });
 </script>
 
-<div class="z-10 flex" data-testid="panel">
+<div class="z-10 flex" data-testid="panel" class:mr-6={$sidebarActive}>
     {#if browser}
         <aside
             data-testid="panel-aside"
-            class={`flex w-[95dvw] flex-col bg-neutral-100 px-2 transition-all sm:w-80 dark:bg-neutral-900 duration-300${
-                !$sidebarActive ? ' -ml-[95dvw] md:-ml-80' : ''
+            class={`flex w-[95dvw] flex-col bg-neutral-100 px-2 transition-all sm:w-80 dark:bg-neutral-950 duration-300${
+                !$sidebarActive ? ' -ml-[95dvw] sm:-ml-80' : ''
             }`}
         >
             <div
@@ -54,8 +51,8 @@
                         const id = Math.max(...$notes.map((o) => o.id), -1) + 1;
                         const newNote = {
                             id: id,
-                            name: 'Untitled Note',
-                            content: '',
+                            content:
+                                '<h1>Untitled Note</h1><p>Lorem ipsum dolor sit amet...</p>',
                         };
                         const updated = [...$notes, newNote];
                         notes.set(updated);
@@ -63,7 +60,7 @@
                         notesDiv.scrollIntoView();
                     }}
                 >
-                    <FontAwesomeIcon icon={faPlus} size="lg" class=" mx-2" />
+                    <Plus class="w-10" />
                 </button>
             </div>
             <div
@@ -73,7 +70,7 @@
                 {#if $notes && $notes.length !== 0}
                     {#each $notes as note (note.id)}
                         <div
-                            class={`my-4 flex items-center rounded-xl border-2 p-1 pl-4
+                            class={`my-4 flex items-center rounded-xl border-2 py-1 pl-4 pr-1
 							${
                                 $currentNote === note.id
                                     ? ' border-blue-400 bg-blue-200 dark:border-blue-700 dark:bg-blue-950 dark:brightness-110'
@@ -95,28 +92,24 @@
                             role="button"
                             tabindex="0"
                         >
-                            <div class="mr-1 max-w-[70%]">
+                            <div class="mr-1 max-w-[80%]">
                                 <span
                                     class="break-words font-semibold outline-none"
                                 >
-                                    {note.name}
+                                    {truncate(
+                                        new DOMParser()
+                                            .parseFromString(
+                                                note.content,
+                                                'text/html',
+                                            )
+                                            .querySelector(
+                                                'h1, h2, h3, h4, h5, h6',
+                                            )?.textContent,
+                                        75,
+                                    ) || 'Untitled Note'}
                                 </span>
                             </div>
                             <div class="ml-auto flex">
-                                <button
-                                    class="flex min-w-[32px] items-center p-2 hover:text-yellow-700"
-                                    data-testid="rename"
-                                    title="Rename"
-                                    on:click|stopPropagation={async () => {
-                                        renameNoteTargetIndex = findNoteIndex(
-                                            note.id,
-                                        );
-                                        await tick();
-                                        renameNote.show();
-                                    }}
-                                >
-                                    <FontAwesomeIcon icon={faPencil} />
-                                </button>
                                 <button
                                     class="flex min-w-[32px] items-center p-2 hover:text-red-500"
                                     data-testid="delete"
@@ -128,7 +121,7 @@
                                         confirmDeletion.show();
                                     }}
                                 >
-                                    <FontAwesomeIcon icon={faTrashCan} />
+                                    <Trash2 class="w-5" />
                                 </button>
                             </div>
                         </div>
@@ -144,13 +137,35 @@
             >
                 <button
                     data-testid="settings-button"
-                    class="flex cursor-pointer items-center rounded-xl px-2 hover:bg-gray-300 dark:hover:bg-gray-800"
+                    class="mr-1 flex cursor-pointer items-center rounded-xl px-2 hover:bg-gray-300 dark:hover:bg-gray-800"
                     title="Settings"
                     on:click={() => {
                         settings.show();
                     }}
                 >
-                    <FontAwesomeIcon icon={faGear} />
+                    <SettingsIcon class="w-5" />
+                </button>
+                <button
+                    data-testid="export-button"
+                    class="flex cursor-pointer items-center rounded-xl px-2 hover:bg-gray-300 dark:hover:bg-gray-800"
+                    title="Export Markdown"
+                    on:click={() => {
+                        const markdown = turndownService.turndown(
+                            $notes[findNoteIndex($currentNote)].content,
+                        );
+                        var a = document.createElement('a');
+                        a.href = URL.createObjectURL(
+                            new Blob([markdown], {
+                                type: 'text/plain',
+                            }),
+                        );
+                        a.download = 'export.md';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }}
+                >
+                    <FileUp class="w-5" />
                 </button>
                 <div
                     class="mx-2 ml-auto flex rounded-full border-2 border-indigo-600 bg-indigo-50 p-1 shadow dark:bg-indigo-950"
@@ -201,4 +216,3 @@
     {confirmDeleteTargetName}
     {confirmDeleteTargetIndex}
 />
-<RenameNote bind:this={renameNote} {renameNoteTargetIndex} />
