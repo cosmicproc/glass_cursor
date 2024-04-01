@@ -19,7 +19,7 @@ test('note persists reload', async ({ page }) => {
     }
     await page.keyboard.type(longText);
     await page.reload();
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(500);
     expect(await editor.innerText()).toBe(initialText + longText);
 });
 

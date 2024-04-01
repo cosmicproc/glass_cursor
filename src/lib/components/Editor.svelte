@@ -2,17 +2,16 @@
     import { currentNote, notes } from '$lib/stores';
     import { debounce } from '$lib/utils';
     import { Editor } from '@tiptap/core';
-    import BubbleMenu from '@tiptap/extension-bubble-menu';
     import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+    import Link from '@tiptap/extension-link';
+    import Placeholder from '@tiptap/extension-placeholder';
     import Typography from '@tiptap/extension-typography';
     import StarterKit from '@tiptap/starter-kit';
     import 'highlight.js/styles/github-dark.css';
     import { common, createLowlight } from 'lowlight';
-    import { beforeUpdate, onDestroy, onMount } from 'svelte';
-    import EditorMenu from './EditorMenu.svelte';
+    import { onDestroy, onMount } from 'svelte';
 
     let editorElement: HTMLElement;
-    let menuElement: HTMLElement;
     let editor: Editor;
 
     const defaultText =
@@ -33,15 +32,18 @@
                 StarterKit.configure({
                     codeBlock: false,
                 }),
-                Typography,
                 CodeBlockLowlight.configure({
                     lowlight: createLowlight(common),
                 }),
-                BubbleMenu.configure({
-                    element: menuElement,
+                Placeholder.configure({
+                    placeholder: 'Dump your mind here…',
+                    emptyEditorClass:
+                        'before:content-[attr(data-placeholder)] before:opacity-50',
                 }),
+                Link,
+                Typography,
             ],
-            content: $notes[index]?.content || defaultText,
+            content: $notes[index]?.content ?? defaultText,
             editable: !!$notes[index]?.content,
             onTransaction: () => {
                 editor = editor;
@@ -55,12 +57,11 @@
         }
     });
 
-    beforeUpdate(() => {
-        saveNote();
-    });
-
+    let lastNote: number;
     currentNote.subscribe((value: number) => {
         if (editor) {
+            lastNote !== undefined && saveNote(lastNote);
+            lastNote = value;
             if (value !== -1) {
                 const index = $notes.findIndex(
                     (o: { id: number }) => o.id === value,
@@ -74,10 +75,10 @@
         }
     });
 
-    function saveNote() {
+    function saveNote(noteId = $currentNote) {
         if (editor) {
             const index = $notes.findIndex(
-                (o: { id: number }) => o.id === $currentNote,
+                (o: { id: number }) => o.id === noteId,
             );
             const updated = $notes;
             if (updated[index]) {
@@ -90,11 +91,19 @@
     const handleInput = debounce(saveNote, 1000);
 </script>
 
-<EditorMenu {editor} bind:menuElement />
-
 <div
     bind:this={editorElement}
     on:input={handleInput}
     data-testid="editor"
     class="flex max-h-full flex-grow justify-center overflow-scroll py-14"
+/>
+
+<svelte:head>
+    <base target="_blank" />
+</svelte:head>
+
+<svelte:window
+    on:beforeunload={() => {
+        saveNote();
+    }}
 />
