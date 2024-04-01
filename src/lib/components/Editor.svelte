@@ -17,6 +17,7 @@
     const defaultText =
         '<p>Choose a note from the <b>side panel</b> to start typing.<br/> You can toggle the visibility of the side panel by clicking the vertical line at the left.</p>';
 
+    const handleInput = debounce(saveNote, 2000);
     onMount(() => {
         const index = $notes.findIndex(
             (o: { id: number }) => o.id === $currentNote,
@@ -47,6 +48,9 @@
             editable: !!$notes[index]?.content,
             onTransaction: () => {
                 editor = editor;
+            },
+            onUpdate() {
+                handleInput();
             },
         });
     });
@@ -87,13 +91,10 @@
             notes.set(updated);
         }
     }
-
-    const handleInput = debounce(saveNote, 1000);
 </script>
 
 <div
     bind:this={editorElement}
-    on:input={handleInput}
     data-testid="editor"
     class="flex max-h-full flex-grow justify-center overflow-scroll py-14"
 />
