@@ -21,7 +21,7 @@
         </p>
         <h2>How can I title a note?</h2>
         <p>
-            Note titles' are basically the first header in your note. Just add
+            Note titles are basically the first header in your note. Just add
             an header to the top of your note.
         </p>
         <h2>How can I make it look more like an app?</h2>
